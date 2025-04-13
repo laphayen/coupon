@@ -1,5 +1,7 @@
 package com.laphayen.couponcore.model;
 
+import com.laphayen.couponcore.exception.CouponIssueException;
+import com.laphayen.couponcore.exception.ErrorCode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -150,8 +152,11 @@ class CouponTest {
                 .dateIssueEnd(LocalDateTime.now().plusDays(2))
                 .build();
 
-        // when & then
-        Assertions.assertThrows(RuntimeException.class, coupon::issue);
+        // when
+        CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, coupon::issue);
+
+        // then
+        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_QUANTITY);
 
     }
 
@@ -167,8 +172,11 @@ class CouponTest {
                 .dateIssueEnd(LocalDateTime.now().plusDays(2))
                 .build();
 
-        // when & then
-        Assertions.assertThrows(RuntimeException.class, coupon::issue);
+        // when
+        CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, coupon::issue);
+
+        // then
+        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_DATE);
 
     }
 
