@@ -1,5 +1,7 @@
 package com.laphayen.couponcore.model;
 
+import com.laphayen.couponcore.exception.CouponIssueException;
+import com.laphayen.couponcore.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,10 +66,10 @@ public class Coupon extends BaseTimeEntity{
     // 쿠폰을 발급합니다.
     public void issue() {
         if (!availableIssueQuantity()) {
-            throw new RuntimeException("쿠폰 발급 가능 수량을 초과했습니다.");
+            throw new CouponIssueException(ErrorCode.INVALID_COUPON_ISSUE_QUANTITY, "쿠폰 발급 가능 수량을 초과했습니다. total: %s, issued: %s".formatted(totalQuantity, issuedQuantity));
         }
         if (!availableIssueDate()) {
-            throw new RuntimeException("쿠폰 발급 가능 기간이 아닙니다.");
+            throw new CouponIssueException(ErrorCode.INVALID_COUPON_ISSUE_DATE, "쿠폰 발급 가능 기간이 아닙니다. request: %s, issueStart: %s, issueEnd: %s".formatted(LocalDateTime.now(), dateIssueStart, dateIssueEnd));
         }
         issuedQuantity++;
 
