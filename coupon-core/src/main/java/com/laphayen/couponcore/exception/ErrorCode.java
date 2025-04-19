@@ -6,6 +6,8 @@ public enum ErrorCode {
 
     INVALID_COUPON_ISSUE_DATE,
 
+    COUPON_NOT_EXIST,
 
+    DUPLICATE_COUPON_ISSUE,
 
 }
