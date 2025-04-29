@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.redisson:redisson:3.27.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
